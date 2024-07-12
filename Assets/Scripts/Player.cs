@@ -6,9 +6,34 @@ public class Player : MonoBehaviour{
 
     [SerializeField] private InputManager inputManager;
     [SerializeField] private float movementSpeed;
+    [SerializeField] private LayerMask countersLayerMask;
     private bool isWalking;
+    private Vector3 lastInteractDir;
 
-    private void Update(){    
+    private void Update(){
+        HandleInteractions();
+        HandleMovement();
+    }
+
+    private void HandleInteractions(){
+        Vector2 inputVector = inputManager.GetMovementVectorNormalized();
+
+        Vector3 moveDir = new Vector3(inputVector.x, 0f, inputVector.y);
+
+        if(moveDir != Vector3.zero){
+            lastInteractDir = moveDir;
+        }
+
+        float interactDistance = 1.5f;
+        
+        if(Physics.Raycast(transform.position, lastInteractDir, out RaycastHit raycastHit, interactDistance, countersLayerMask)){
+            if(raycastHit.transform.TryGetComponent(out ClearCounter clearCounter)){
+                clearCounter.Interact();
+            }
+        } 
+    }
+
+    private void HandleMovement(){
         Vector2 inputVector = inputManager.GetMovementVectorNormalized();
 
         Vector3 moveDir = new Vector3(inputVector.x, 0f, inputVector.y);
