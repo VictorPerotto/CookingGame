@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CuttingCounter : BaseCounter{
+
+    public event EventHandler OnCut;
 
     [SerializeField] private KitchenObjectSO slicedObjectSO;
 
@@ -27,6 +30,7 @@ public class CuttingCounter : BaseCounter{
             GetKitchenObject().DestroySelf();
 
             KitchenObject.SpawnKitchenObject(slicedObjectSO, this);
+            OnCut?.Invoke(this, EventArgs.Empty);
         }
     }
 }
