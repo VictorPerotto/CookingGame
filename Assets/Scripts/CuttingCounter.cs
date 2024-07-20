@@ -39,6 +39,12 @@ public class CuttingCounter : BaseCounter, IHasProgress{
                 OnProgressBarChanged?.Invoke(this, new IHasProgress.OnProgressBarChangedEventArgs{
                     progressNormalized = progressNow
                 });
+            } else {
+                if(player.GetKitchenObject().TryGetPlate(out PlateKitchenObject plateKitchenObject)){
+                    if(plateKitchenObject.TryAddIngredient(GetKitchenObject().GetKitchenObjectSO())){
+                        GetKitchenObject().DestroySelf();
+                    }
+                }
             }
         }
     }
