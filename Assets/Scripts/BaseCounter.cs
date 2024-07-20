@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BaseCounter : MonoBehaviour, IKitchenObjectParent{
 
-    [SerializeField] private Transform counterTopPoint;
+    [SerializeField] protected Transform counterTopPoint;
 
     private KitchenObject kitchenObject;
     
