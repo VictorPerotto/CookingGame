@@ -16,15 +16,20 @@ public class GameManager : MonoBehaviour{
 
     public event EventHandler OnStateChanged;
 
+    [SerializeField]private float gamePlayingTimer = 10f;
     private float waitingToStartTimer = 1f;
     private float coutdownToStartTimer = 3f;
-    private float gamePlayingTimer = 10f;
+    private float gamePlayingTimerMax;
     private State state;
 
     private void Awake(){
         if(Instance == null){
             Instance = this;
         }
+    }
+
+    private void Start(){
+        gamePlayingTimerMax = gamePlayingTimer;
     }
 
     private void Update(){
@@ -70,7 +75,15 @@ public class GameManager : MonoBehaviour{
         return state == State.CountDownToStart;
     }
 
+    public bool IsGameOver(){
+        return state == State.GameOver;
+    }
+
     public bool IsGamePlaying(){
         return state == State.GamePlaying;
+    }
+
+    public float GetPlayingTimerNormalized(){
+        return gamePlayingTimer / gamePlayingTimerMax;
     }
 }
