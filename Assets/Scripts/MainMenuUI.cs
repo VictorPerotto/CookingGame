@@ -6,7 +6,7 @@ public class MainMenuUI : MonoBehaviour{
     [SerializeField] private Button playButton;
     [SerializeField] private Button quitButton;
 
-    private void Start(){
+    private void Awake(){
         playButton.onClick.AddListener(() => {
             Loader.Load(Loader.Scene.GameScene);
         });
@@ -14,5 +14,7 @@ public class MainMenuUI : MonoBehaviour{
         quitButton.onClick.AddListener(() => {
             Application.Quit();
         });
-    }
+
+        Time.timeScale = 1;
+    } 
 }

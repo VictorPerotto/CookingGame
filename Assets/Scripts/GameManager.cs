@@ -22,6 +22,10 @@ public class GameManager : MonoBehaviour{
     private float gamePlayingTimerMax;
     private State state;
 
+    public event EventHandler OnGamePaused;
+    public event EventHandler OnGameUnpaused;
+    private bool gameIsPaused;
+
     private void Awake(){
         if(Instance == null){
             Instance = this;
@@ -29,7 +33,13 @@ public class GameManager : MonoBehaviour{
     }
 
     private void Start(){
+        InputManager.Instance.OnPauseAction += InputManager_OnPauseAction;
+
         gamePlayingTimerMax = gamePlayingTimer;
+    }
+
+    private void InputManager_OnPauseAction(object sender, EventArgs e){
+        TogglePauseGame();
     }
 
     private void Update(){
@@ -64,7 +74,18 @@ public class GameManager : MonoBehaviour{
             case State.GameOver:
                 break;
         }
-        Debug.Log(state);
+    }
+
+    public void TogglePauseGame(){
+        gameIsPaused = !gameIsPaused;
+
+        if(gameIsPaused){
+            Time.timeScale = 0;
+            OnGamePaused?.Invoke(this, EventArgs.Empty);
+        } else {
+            Time.timeScale = 1f;
+            OnGameUnpaused?.Invoke(this, EventArgs.Empty);
+        }
     }
 
     public float GetCountdownToStart(){
