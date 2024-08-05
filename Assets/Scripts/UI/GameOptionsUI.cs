@@ -22,6 +22,9 @@ public class GameOptionsUI : MonoBehaviour{
     [SerializeField] private Button interactButton;
     [SerializeField] private Button interactAlternateButton;
     [SerializeField] private Button pauseButton;
+    [SerializeField] private Button gamepadInteractButton;
+    [SerializeField] private Button gamepadInteractAlternateButton;
+    [SerializeField] private Button gamepadPauseButton;
 
     [SerializeField] private TextMeshProUGUI moveUpButtonText;
     [SerializeField] private TextMeshProUGUI moveDownButtonText;
@@ -30,8 +33,13 @@ public class GameOptionsUI : MonoBehaviour{
     [SerializeField] private TextMeshProUGUI interactButtonText;
     [SerializeField] private TextMeshProUGUI interactAlternateButtonText;
     [SerializeField] private TextMeshProUGUI pauseButtonText;
+    [SerializeField] private TextMeshProUGUI gamepadInteractButtonText;
+    [SerializeField] private TextMeshProUGUI gamepadInteractAlternateButtonText;
+    [SerializeField] private TextMeshProUGUI gamepadPauseButtonText;
 
     [SerializeField] private CanvasGroup pressKeyCanvasGroup;
+
+    private Action onCloseButtonAction;
 
     private void Awake(){
 
@@ -57,6 +65,9 @@ public class GameOptionsUI : MonoBehaviour{
         interactButton.onClick.AddListener(() => {RebindBinding(InputManager.Binding.Interact);});
         interactAlternateButton.onClick.AddListener(() => {RebindBinding(InputManager.Binding.InteractAlternate);});
         pauseButton.onClick.AddListener(() => {RebindBinding(InputManager.Binding.Pause);});
+        gamepadInteractButton.onClick.AddListener(() => {RebindBinding(InputManager.Binding.GamepadInteract);});
+        gamepadInteractAlternateButton.onClick.AddListener(() => {RebindBinding(InputManager.Binding.GamepadInteractAlternate);});
+        gamepadPauseButton.onClick.AddListener(() => {RebindBinding(InputManager.Binding.GamepadPause);});
 
         canvasGroup = GetComponent<CanvasGroup>();
     }
@@ -69,6 +80,9 @@ public class GameOptionsUI : MonoBehaviour{
         interactButtonText.SetText(InputManager.Instance.GetBindingText(InputManager.Binding.Interact));
         interactAlternateButtonText.SetText(InputManager.Instance.GetBindingText(InputManager.Binding.InteractAlternate));
         pauseButtonText.SetText(InputManager.Instance.GetBindingText(InputManager.Binding.Pause));
+        gamepadInteractButtonText.SetText(InputManager.Instance.GetBindingText(InputManager.Binding.GamepadInteract));
+        gamepadInteractAlternateButtonText.SetText(InputManager.Instance.GetBindingText(InputManager.Binding.GamepadInteractAlternate));
+        gamepadPauseButtonText.SetText(InputManager.Instance.GetBindingText(InputManager.Binding.GamepadPause));
     }
 
     private void Start(){
@@ -82,7 +96,11 @@ public class GameOptionsUI : MonoBehaviour{
         Hide();
     }
 
-    public void Show(){
+    public void Show(Action onCloseButtonAction){
+        this.onCloseButtonAction = onCloseButtonAction;
+
+        moveUpButton.Select();
+
         canvasGroup.blocksRaycasts = true;
         canvasGroup.interactable = true;
         canvasGroup.alpha = 1f;
@@ -92,6 +110,8 @@ public class GameOptionsUI : MonoBehaviour{
         canvasGroup.blocksRaycasts = false;
         canvasGroup.interactable = false;
         canvasGroup.alpha = 0f;
+
+        onCloseButtonAction();
     }
 
     private void HideToPressKey(){

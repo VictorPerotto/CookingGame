@@ -178,9 +178,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""5e8a338e-dde5-46fd-87e2-1e51d0ee1387"",
-                    ""path"": ""*/{Primary2DMotion}"",
+                    ""path"": ""<Gamepad>/leftStick"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""StickDeadzone"",
                     ""groups"": """",
                     ""action"": ""Move"",
                     ""isComposite"": false,

@@ -23,6 +23,9 @@ public class InputManager : MonoBehaviour{
         Interact,
         InteractAlternate,
         Pause,
+        GamepadInteract,
+        GamepadInteractAlternate,
+        GamepadPause,
     }
 
     PlayerInputActions playerInputActions;
@@ -87,6 +90,12 @@ public class InputManager : MonoBehaviour{
                 return playerInputActions.Player.Move.bindings[3].ToDisplayString();
             case Binding.MoveRight:
                 return playerInputActions.Player.Move.bindings[4].ToDisplayString();
+            case Binding.GamepadInteract:
+                return playerInputActions.Player.Interact.bindings[1].ToDisplayString();
+            case Binding.GamepadInteractAlternate:
+                return playerInputActions.Player.InteractAlternate.bindings[1].ToDisplayString();
+            case Binding.GamepadPause:
+                return playerInputActions.Player.Pause.bindings[1].ToDisplayString();
         }
     }
 
@@ -125,6 +134,18 @@ public class InputManager : MonoBehaviour{
             case Binding.Pause:
                 inputAction = playerInputActions.Player.Pause;
                 bindingIndex = 0;
+                break;
+            case Binding.GamepadInteract:
+                inputAction = playerInputActions.Player.Interact;
+                bindingIndex = 1;
+                break;
+            case Binding.GamepadInteractAlternate:
+                inputAction = playerInputActions.Player.InteractAlternate;
+                bindingIndex = 1;
+                break;
+            case Binding.GamepadPause:
+                inputAction = playerInputActions.Player.Pause;
+                bindingIndex = 1;
                 break;
         }
 
