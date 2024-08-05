@@ -89,7 +89,6 @@ public class GameOptionsUI : MonoBehaviour{
         InputManager.Instance.OnPauseAction += InputManager_OnPauseAction;
         
         UpdateVisuals();
-        Hide();
     }
 
     private void InputManager_OnPauseAction(object sender, EventArgs e){
